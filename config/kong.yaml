@@ -1,0 +1,21 @@
+_format_version: "2.1"
+_transform: true
+
+services:
+- name: test-server
+  url: http://MYIP:8088
+  routes:
+   - name: test-route
+     strip_path: false
+     paths:
+      - /test
+     plugins:
+        - name: pre-function
+          config:
+            access: 
+            - | 
+              local raw_body = kong.request.get_raw_body()
+              if raw_body then
+                local updated_body = raw_body:gsub("Sept", "Sep")
+                kong.service.request.set_raw_body(updated_body)
+              end
