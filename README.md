@@ -1,8 +1,8 @@
 # Kong pre-function for Sept / /Sep CLDR fix
 
-After experiencing a problem with dates provided from unicode / CLDR which brings back a short code of "Sept" rather than "Sep" (migrating from Java 11 - 17 among other languages like PHP) for the pattern dd-MMM-yyyy, I decided to take a look at whether this could be fixed tactically in Kong API Gateway, for organisations that have an API Gateway capability at there disposal.
+After experiencing a problem with dates provided from unicode / CLDR which brings back a short code of "Sept" rather than "Sep" (migrating from Java 11 - 17 among other languages like PHP) for the pattern dd-MMM-yyyy, I decided to take a look at whether this could be fixed tactically in Kong API Gateway, for organisations that have an API Gateway capability at their disposal.
 
-This isn't intended as a permanet or tactical fix, but could be useful tactially in reducing pressure on a team at the same time as returning service for customers more quickly than a full rollback or fix forward.
+This isn't intended as a permanent strategic fix, but could be useful tactially in reducing pressure on a team while returning service for customers more quickly than a full rollback or fix forward.
 
 Use case is where an API contract might have been broken as a result of an upgrade where edge cases may cause issues not covered by existing test cases.
 
