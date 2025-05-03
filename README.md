@@ -27,7 +27,7 @@ https://docs.konghq.com/gateway/latest/install/docker/
 
 ## Config / Kongfig :|
 
-The **./kong.yaml** configuration file contains a pre-function plugin config with embedded lua to transform -Sept- to -Sep- within the request body of a payload.
+The **./config/kong.yaml** configuration file contains a pre-function plugin config with embedded lua to transform -Sept- to -Sep- within the request body of a payload.
 
 ## Running the demo (on MacOS)
 
