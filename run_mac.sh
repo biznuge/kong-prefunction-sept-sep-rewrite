@@ -193,7 +193,7 @@ echo "Node.js server started with PID: $NODE_PID"
 echo "Waiting for Node Server to start..."
 until $(curl --output /dev/null --silent --head --fail http://localhost:8001); do
   printf '.'
-  sleep 3
+  sleep 10
 done
 
 # Check if the server started successfully
