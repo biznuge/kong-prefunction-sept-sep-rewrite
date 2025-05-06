@@ -60,13 +60,13 @@ KONG_VERSION=$DEFAULT_KONG_VERSION
 # Check if a command-line argument is provided
 if [ -n "$1" ]; then
   # An argument is provided, validate it
-  if [ "$1" == "2.8" ] || [ "$1" == "3.4" ]; then
+  if [ "$1" == "2.8" ] || [ "$1" == "3.4" ] || [ "$1" == "3.10" ]; then
     # Valid version provided, use it
     KONG_VERSION="$1"
     echo "Using provided Kong version: $KONG_VERSION"
   else
     # Invalid version provided
-    echo "Invalid kong_version specified: '$1'. Allowed values are '2.8' or '3.4'." >&2 # Print error to stderr
+    echo "Invalid kong_version specified: '$1'. Allowed values are '2.8', '3.4' or '3.10'." >&2 # Print error to stderr
     echo "Using default Kong version: $DEFAULT_KONG_VERSION"
     # Keep the default version
   fi
@@ -78,6 +78,9 @@ fi
 KONG_DOCKER_VERSION="2.8.4.14"
 if [ $KONG_VERSION == "3.4" ]; then
   KONG_DOCKER_VERSION="3.4.3.16"
+fi
+if [ $KONG_VERSION == "3.10" ]; then
+  KONG_DOCKER_VERSION="3.10.0.1"
 fi
 
 echo "-------------------------------------"

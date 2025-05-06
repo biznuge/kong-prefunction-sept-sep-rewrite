@@ -35,7 +35,7 @@ You can use the run_mac.sh script located in the root of this repo to run test.
 
 This script will:
 - Grab your local IP address to route between docker and your machine
-- Install Kong Docker (default is 2.8 or you can speify 3.4 on command line)
+- Install Kong Docker (default is 2.8 or you can speify 3.4 or 3.10 on command line)
 - Start a Node test server
 - Run a test script which outputs to the console
 - Tear Kong Docker and Node server down for you
@@ -50,11 +50,13 @@ Open up a terminal on MacOS. Kong 2.8 is the default version, so just running th
 
 ### For Kong 3.4
 
-If you want to test with 3.4 just add "3.4" to the end of the script.
+If you want to test with 3.4 or 3.10 just add "3.4" or "3.10" to the end of the script.
 
 > ./run_mac.sh 3.4
 
-Only these 2 versions of Kong are included (both LTS versions) as I needed to cherry pick the versions of Kong I wanted to test. You could easily add more by tweaking run_mac.sh.
+> ./run_mac.sh 3.10
+
+Only these 3 versions of Kong are included (both LTS versions) as I needed to cherry pick the versions of Kong I wanted to test. You could easily add more by tweaking run_mac.sh.
 
 
 
