@@ -186,9 +186,17 @@ fi
 
 echo "Starting Node.js server ($NODE_SERVER_SCRIPT) in the background..."
 
+# Check if a Node.js server is already running on the specified IP and port, and terminate it if found
+if lsof -i :8088 | grep -q "node"; then
+  echo "A Node.js server is already running on port 8088. Terminating it..."
+  lsof -ti :8088 | xargs kill -9
+fi
+
 # Start the Node.js server in the background and capture its PID
 node "$NODE_SERVER_SCRIPT" --ip $IP_ADDRESS &
 NODE_PID=$!
+
+
 
 echo "Node.js server started with PID: $NODE_PID"
 
