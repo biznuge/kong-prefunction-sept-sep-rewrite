@@ -59,6 +59,16 @@ if (ipAddress) {
                 res.end('Missing dob field in the request body');
                 }
             });
+        } else if (req.method === 'GET' && req.url === '/limited') {
+        
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            res.end('This is a limited GET response');
+          
+        } else if (req.method === 'GET' && req.url === '/unlimited') {
+        
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            res.end('This is an unlimited GET response');
+          
         } else {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.end('Not Found HERE');

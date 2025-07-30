@@ -111,6 +111,75 @@ for date in "${incorrect_dates_to_test[@]}"; do
     test_date "$date"
 done
 
+
+
+SERVER_URL="http://localhost:8000"
+
+echo "========================================"
+echo "Testing rate limiting on /limited endpoint (2 TPS)..."
+
+rate_limit_passed=true
+
+limited_endpoint="$SERVER_URL/limited"
+unlimited_endpoint="$SERVER_URL/unlimited"
+
+# Test /limited endpoint: send 3 requests in quick succession
+limited_responses=()
+for i in {1..3}; do
+    resp=$(curl -s -o /dev/null -w "%{http_code}" "$limited_endpoint")
+    limited_responses+=("$resp")
+    echo "Request $i to /limited: HTTP $resp"
+done
+
+# Check that first two requests succeed (assume 200), third should be rate limited (assume 429)
+if [[ "${limited_responses[0]}" == "200" && "${limited_responses[1]}" == "200" && "${limited_responses[2]}" == "429" ]]; then
+    echo "Test PASSED: /limited endpoint correctly enforces 2 TPS rate limit."
+else
+    echo "Test FAILED: /limited endpoint did not enforce rate limit as expected."
+    rate_limit_passed=false
+fi
+
+echo "========================================"
+echo "Testing /unlimited endpoint (no rate limit)..."
+
+unlimited_passed=true
+
+# Test /unlimited endpoint: send 5 requests in quick succession
+unlimited_responses=()
+for i in {1..5}; do
+    resp=$(curl -s -o /dev/null -w "%{http_code}" "$unlimited_endpoint")
+    unlimited_responses+=("$resp")
+    echo "Request $i to /unlimited: HTTP $resp"
+done
+
+# All should succeed (assume 200)
+for resp in "${unlimited_responses[@]}"; do
+    if [[ "$resp" != "200" ]]; then
+        unlimited_passed=false
+        break
+    fi
+done
+
+if $unlimited_passed; then
+    echo "Test PASSED: /unlimited endpoint allows unlimited requests."
+else
+    echo "Test FAILED: /unlimited endpoint did not allow unlimited requests."
+fi
+
+# Final output for rate limiting tests
+echo "========================================"
+if $rate_limit_passed && $unlimited_passed; then
+    echo -e "\033[1;32mRATE LIMIT TESTS PASSED SUCCESSFULLY!\033[0m"
+else
+    echo -e "\033[1;31mSOME RATE LIMIT TESTS FAILED. PLEASE CHECK THE OUTPUT ABOVE.\033[0m"
+    all_tests_passed=false
+fi
+echo "========================================"
+
+
+
+
+
 # Final output
 echo "========================================"
 if $all_tests_passed; then
